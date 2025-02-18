@@ -28,9 +28,22 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun BiggerNumberGame() {
-    // State for two random numbers
+    // State variables
     var num1 by remember { mutableStateOf(Random.nextInt(1, 100)) }
     var num2 by remember { mutableStateOf(Random.nextInt(1, 100)) }
+    var message by remember { mutableStateOf("Choose the bigger number") }
+
+    // Function to check the answer
+    fun checkAnswer(selected: Int) {
+        message = if (selected == maxOf(num1, num2)) {
+            "Correct!"
+        } else {
+            "Wrong!"
+        }
+        // Generate new numbers after answer
+        num1 = Random.nextInt(1, 100)
+        num2 = Random.nextInt(1, 100)
+    }
 
     Column(
         modifier = Modifier
@@ -42,15 +55,18 @@ fun BiggerNumberGame() {
         Text(text = "Bigger Number Game!", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(20.dp))
 
+        Text(text = message, style = MaterialTheme.typography.bodyLarge)
+        Spacer(modifier = Modifier.height(20.dp))
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { num1 = Random.nextInt(1, 100); num2 = Random.nextInt(1, 100) }) {
+            Button(onClick = { checkAnswer(num1) }) {
                 Text(text = "$num1")
             }
 
-            Button(onClick = { num1 = Random.nextInt(1, 100); num2 = Random.nextInt(1, 100) }) {
+            Button(onClick = { checkAnswer(num2) }) {
                 Text(text = "$num2")
             }
         }
