@@ -4,14 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.bntry3.ui.theme.BNTry3Theme
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,29 +20,47 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BNTry3Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                BiggerNumberGame()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun BiggerNumberGame() {
+    // State for two random numbers
+    var num1 by remember { mutableStateOf(Random.nextInt(1, 100)) }
+    var num2 by remember { mutableStateOf(Random.nextInt(1, 100)) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = "Bigger Number Game!", style = MaterialTheme.typography.headlineMedium)
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Button(onClick = { num1 = Random.nextInt(1, 100); num2 = Random.nextInt(1, 100) }) {
+                Text(text = "$num1")
+            }
+
+            Button(onClick = { num1 = Random.nextInt(1, 100); num2 = Random.nextInt(1, 100) }) {
+                Text(text = "$num2")
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun BiggerNumberGamePreview() {
     BNTry3Theme {
-        Greeting("Android")
+        BiggerNumberGame()
     }
 }
