@@ -32,13 +32,16 @@ fun BiggerNumberGame() {
     var num1 by remember { mutableStateOf(Random.nextInt(1, 100)) }
     var num2 by remember { mutableStateOf(Random.nextInt(1, 100)) }
     var message by remember { mutableStateOf("Choose the bigger number") }
+    var score by remember { mutableStateOf(0) }  // Track score
 
     // Function to check the answer
     fun checkAnswer(selected: Int) {
-        message = if (selected == maxOf(num1, num2)) {
-            "Correct!"
+        if (selected == maxOf(num1, num2)) {
+            message = "Correct!"
+            score += 1  // Increase score
         } else {
-            "Wrong!"
+            message = "Wrong!"
+            score -= 1  // Decrease score
         }
         // Generate new numbers after answer
         num1 = Random.nextInt(1, 100)
@@ -70,6 +73,10 @@ fun BiggerNumberGame() {
                 Text(text = "$num2")
             }
         }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Text(text = "Score: $score", style = MaterialTheme.typography.headlineSmall)
     }
 }
 
