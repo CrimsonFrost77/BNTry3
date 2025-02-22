@@ -75,6 +75,18 @@ fun BiggerNumberGame() {
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(text = "Score: $score", style = MaterialTheme.typography.headlineSmall)
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Button(onClick = {
+            // Reset the game
+            num1 = Random.nextInt(1, 100)
+            num2 = Random.nextInt(1, 100)
+            message = "Choose the bigger number"
+            score = 0
+        }) {
+            Text(text = "Reset Game")
+        }
     }
 }
 
